@@ -21,6 +21,7 @@ import util
 
 def main():
     last_frida_tag = util.get_last_github_tag('hzzheyang/strongR-frida-android')
+    print(f"Last frida strong tag: {last_frida_tag}")
     last_project_tag = util.get_last_project_tag()
     last_commit_tag = util.get_last_commit_tag()
     new_project_tag = "0"
