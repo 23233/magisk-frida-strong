@@ -79,14 +79,14 @@ def fill_module(arch: str, frida_tag: str, project_tag: str):
     threading.current_thread().setName(arch)
     logger.info(f"Filling module for arch '{arch}'")
 
-    frida_download_url = f"https://github.com/frida/frida/releases/download/{frida_tag}/"
-    frida_server = f"frida-server-{frida_tag}-android-{arch}.xz"
+    frida_download_url = f"https://github.com/hzzheyang/strongR-frida-android/releases/download/{frida_tag}/"
+    frida_server = f"hluda-server-{frida_tag}-android-{arch}.xz"
     frida_server_path = PATH_DOWNLOADS.joinpath(frida_server)
 
     download_file(frida_download_url + frida_server, frida_server_path)
     files_dir = PATH_BUILD_TMP.joinpath("files")
     files_dir.mkdir(exist_ok=True)
-    extract_file(frida_server_path, files_dir.joinpath(f"frida-server-{arch}"))
+    extract_file(frida_server_path, files_dir.joinpath(f"hluda-server-{arch}"))
 
 
 def create_updater_json(project_tag: str):
@@ -95,7 +95,7 @@ def create_updater_json(project_tag: str):
     updater ={
         "version": project_tag,
         "versionCode": int(project_tag.replace(".", "").replace("-", "")),
-        "zipUrl": f"https://github.com/ViRb3/magisk-frida/releases/download/{project_tag}/MagiskFrida-{project_tag}.zip"
+        "zipUrl": f"https://github.com/23233/magisk-frida-strong/releases/download/{project_tag}/MagiskFrida-{project_tag}.zip"
     }
 
     with open(PATH_BUILD.joinpath("updater.json"), "w", newline="\n") as f:
