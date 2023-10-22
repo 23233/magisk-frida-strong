@@ -75,36 +75,37 @@ def create_module(project_tag: str):
     create_module_prop(PATH_BUILD_TMP, project_tag)
 
 
-def fill_module(arch: str, frida_tag: str, project_tag: str):
+def fill_module(arch: str, frida_tag: str, project_tag: str = None, prefix: str = "frida"):
     threading.current_thread().setName(arch)
     logger.info(f"Filling module for arch '{arch}'")
 
     frida_download_url = f"https://github.com/hzzheyang/strongR-frida-android/releases/download/{frida_tag}/"
-    frida_server = f"hluda-server-{frida_tag}-android-{arch}.xz"
+    frida_server = f"{prefix}-server-{frida_tag}-android-{arch}.xz"
     frida_server_path = PATH_DOWNLOADS.joinpath(frida_server)
 
     download_file(frida_download_url + frida_server, frida_server_path)
     files_dir = PATH_BUILD_TMP.joinpath("files")
     files_dir.mkdir(exist_ok=True)
-    extract_file(frida_server_path, files_dir.joinpath(f"hluda-server-{arch}"))
+    extract_file(frida_server_path, files_dir.joinpath(f"{prefix}-server-{arch}"))
 
 
 def create_updater_json(project_tag: str):
     logger.info("Creating updater.json")
-    
-    updater ={
+
+    updater = {
         "version": project_tag,
         "versionCode": int(project_tag.replace(".", "").replace("-", "")),
         "zipUrl": f"https://github.com/23233/magisk-frida-strong/releases/download/{project_tag}/MagiskFrida-{project_tag}.zip"
     }
 
     with open(PATH_BUILD.joinpath("updater.json"), "w", newline="\n") as f:
-        f.write(json.dumps(updater, indent = 4))
+        f.write(json.dumps(updater, indent=4))
+
 
 def package_module(project_tag: str):
     logger.info("Packaging module")
 
-    module_zip = PATH_BUILD.joinpath(f"MagiskFrida-{project_tag}.zip")
+    module_zip = PATH_BUILD.joinpath(f"MagiskFridaStrong-{project_tag}.zip")
 
     with zipfile.ZipFile(module_zip, "w", compression=zipfile.ZIP_DEFLATED) as zf:
         for root, _, files in os.walk(PATH_BUILD_TMP):
@@ -125,7 +126,7 @@ def do_build(frida_tag: str, project_tag: str):
 
     archs = ["arm", "arm64", "x86", "x86_64"]
     executor = concurrent.futures.ProcessPoolExecutor()
-    futures = [executor.submit(fill_module, arch, frida_tag, project_tag)
+    futures = [executor.submit(fill_module, arch, frida_tag, project_tag,"hluda")
                for arch in archs]
     for future in concurrent.futures.as_completed(futures):
         if future.exception() is not None:

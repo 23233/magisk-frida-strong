@@ -17,13 +17,6 @@ def get_last_github_tag(project_name) -> str:
     return last_release
 
 
-# gets last tag of frida
-def get_last_frida_tag() -> str:
-    last_frida_tag = get_last_github_tag('hzzheyang/strongR-frida-android')
-    print(f"Last frida tag: {last_frida_tag}")
-    return last_frida_tag
-
-
 # gets last tag of whole project
 def get_last_project_tag() -> str:
     last_tag = get_last_tag([])
