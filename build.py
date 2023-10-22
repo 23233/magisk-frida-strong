@@ -53,13 +53,13 @@ def extract_file(archive_path: Path, dest_path: Path):
 
 
 def create_module_prop(path: Path, project_tag: str):
-    module_prop = f"""id=magisk-frida
-name=MagiskFrida
+    module_prop = f"""id=magisk-frida-strong
+name=MagiskFridaStrong
 version={project_tag}
 versionCode={project_tag.replace(".", "").replace("-", "")}
-author=ViRb3
-description=Run frida-server on boot
-updateJson=https://github.com/ViRb3/magisk-frida/releases/latest/updater.json"""
+author=23233
+description=Run frida-strong-server on boot
+updateJson=https://github.com/23233/magisk-frida-strong/releases/latest/updater.json"""
 
     with open(path.joinpath("module.prop"), "w", newline="\n") as f:
         f.write(module_prop)
@@ -95,7 +95,7 @@ def create_updater_json(project_tag: str):
     updater = {
         "version": project_tag,
         "versionCode": int(project_tag.replace(".", "").replace("-", "")),
-        "zipUrl": f"https://github.com/23233/magisk-frida-strong/releases/download/{project_tag}/MagiskFrida-{project_tag}.zip"
+        "zipUrl": f"https://github.com/23233/magisk-frida-strong/releases/download/{project_tag}/MagiskFridaStrong-{project_tag}.zip"
     }
 
     with open(PATH_BUILD.joinpath("updater.json"), "w", newline="\n") as f:

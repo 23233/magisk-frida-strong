@@ -124,16 +124,12 @@ REPLACE="
 print_modname() {
   ui_print " "
   ui_print "    ********************************************"
-  ui_print "    *             MagiskFridaStrong            *"
+  ui_print "    *               MagiskFrida                *"
   ui_print "    ********************************************"
   ui_print " "
 }
 
 # Copy/extract your module files into $MODPATH in on_install.
-
-
-# 前缀修改了还的记得改这里的hluda 为自定义的前缀
-L_PREFIX="hluda"  # 定义前缀变量
 
 on_install() {
   case $ARCH in
@@ -150,12 +146,10 @@ on_install() {
   F_TARGETDIR="$MODPATH/system/bin"
   UNZIP="/data/adb/magisk/busybox unzip"
 
-  ui_print "- Use Prefix :$L_PREFIX"
-
   mkdir -p "$F_TARGETDIR"
-  $UNZIP -qq -o "$ZIPFILE" "files/$L_PREFIX-server-$F_ARCH" -j -d "$F_TARGETDIR"
+  $UNZIP -qq -o "$ZIPFILE" "files/hluda-server-$F_ARCH" -j -d "$F_TARGETDIR"
 
-  mv "$F_TARGETDIR/$L_PREFIX-server-$F_ARCH" "$F_TARGETDIR/$L_PREFIX-server"
+  mv "$F_TARGETDIR/hluda-server-$F_ARCH" "$F_TARGETDIR/hluda-server"
 }
 
 # Only some special files require specific permissions
@@ -167,7 +161,7 @@ set_permissions() {
   set_perm_recursive $MODPATH 0 0 0755 0644
 
   # Custom permissions
-  set_perm $MODPATH/system/bin/$L_PREFIX-server 0 2000 0755 u:object_r:system_file:s0
+  set_perm $MODPATH/system/bin/hluda-server 0 2000 0755 u:object_r:system_file:s0
 }
 
 # You can add more functions to assist your custom script code
